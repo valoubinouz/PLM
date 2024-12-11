@@ -49,3 +49,7 @@ def init_routes(app):
         data['cart'] = cart
         save_data(data)
         return redirect(url_for('cart'))
+
+    @app.route('/login')
+    def login():
+        return render_template('login.html')

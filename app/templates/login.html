@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+
+</head>
+
+<body>
+  <div id="login-form">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+      <input type="username" name="username" placeholder="Username"> <br><br>
+      <input type="password" name="password" placeholder="Password"> <br><br>
+      <input type="submit" value="Login">
+    </form>
+    <button onclick="toggleForm()">No account? Signup</button>
+  </div>
+
+  <div id="signup-form" style="display: none;">
+    <h2>Signup</h2>
+    <form action="/signup" method="POST">
+      <input type="username" name="username" placeholder="Username"> <br><br>
+      <input type="password" name="password" placeholder="Password"> <br><br>
+      <input type="submit" value="Signup">
+    </form>
+    <button onclick="toggleForm()">Already have an account? Login</button>
+  </div>
+
+  <script>
+    function toggleForm() {
+      var loginForm = document.getElementById("login-form");
+      var signupForm = document.getElementById("signup-form");
+
+      if (loginForm.style.display === "none") {
+        loginForm.style.display = "block";
+        signupForm.style.display = "none";
+      } else {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+      }
+    }
+  </script>
+</body>
+
+</html>
