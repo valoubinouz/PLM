@@ -1,55 +1,74 @@
 import json
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+
 
 # Charger les données depuis le fichier JSON
-def load_data():
-    with open('app/data.json', 'r') as f:
+def load_product():
+    with open('app/data/product.json', 'r') as f:
         return json.load(f)
 
-def save_data(data):
-    with open('app/data.json', 'w') as f:
+def save_product(data):
+    with open('app/data/product.json', 'w') as f:
         json.dump(data, f, indent=4)
 
 def init_routes(app):
     @app.route('/')
     def home():
-        data = load_data()
+        data = load_product()
         products = data.get('products', [])
         return render_template('home.html', products=products)
 
-    @app.route('/product/<int:product_id>')
-    def product(product_id):
-        data = load_data()
-        product = next((p for p in data.get('products', []) if p['id'] == product_id), None)
-        if not product:
-            return "Product not found", 404
-        return render_template('product.html', product=product)
-
-    @app.route('/cart')
-    def cart():
-        data = load_data()
-        cart = data.get('cart', [])
-        return render_template('cart.html', cart=cart)
-
-    @app.route('/add_to_cart/<int:product_id>')
-    def add_to_cart(product_id):
-        data = load_data()
-        product = next((p for p in data.get('products', []) if p['id'] == product_id), None)
-        if not product:
-            return "Product not found", 404
-
-        # Ajouter au panier
-        cart = data.get('cart', [])
-        cart_item = next((item for item in cart if item['id'] == product_id), None)
-        if cart_item:
-            cart_item['quantity'] += 1
-        else:
-            cart.append({'id': product_id, 'name': product['name'], 'price': product['price'], 'quantity': 1})
-
-        data['cart'] = cart
-        save_data(data)
-        return redirect(url_for('cart'))
-
+    
     @app.route('/login')
     def login():
         return render_template('login.html')
+
+# Charger les utilisateurs depuis le fichier JSON
+def load_users():
+    with open('app/data.json', 'r') as f:
+        data = json.load(f)
+    return data.get('users', [])
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        users = load_users()
+
+        # Vérifier si l'utilisateur existe
+        user = next((u for u in users if u['username'] == username and u['password'] == password), None)
+        if user:
+            session['username'] = user['username']
+            session['role'] = user['role']
+
+            # Rediriger selon le rôle
+            if user['role'] == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            elif user['role'] == 'client':
+                return redirect(url_for('client_dashboard'))
+
+        # En cas d'échec
+        return render_template('login.html', error="Invalid credentials")
+
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+@app.route('/admin')
+def admin_dashboard():
+    if 'role' in session and session['role'] == 'admin':
+        return render_template('admin_dashboard.html')
+    return redirect(url_for('login'))
+
+@app.route('/client')
+def client_dashboard():
+    if 'role' in session and session['role'] == 'client':
+        return render_template('client_dashboard.html')
+    return redirect(url_for('login'))
