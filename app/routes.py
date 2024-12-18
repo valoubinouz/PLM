@@ -83,6 +83,46 @@ def init_routes(app):
         if 'role' in session and session['role'] == 'client':
             user = {'username': session['username'], 'role': session['role']}  # Créer un dictionnaire user
             products = load_product()
-            return render_template('client_dashboard.html', user=user, products=products)  # Passer user et products à la template
+            # Filtrer uniquement les produits appartenant à l'utilisateur connecté
+            user_products = [p for p in products if p['owner'] == user['username']]
+            return render_template('client_products.html', user=session, products=user_products)
         return redirect(url_for('login'))
+   
+
+    @app.route('/client/<username>/add_product', methods=['GET', 'POST'])
+    def add_product(username):
+        if 'username' in session and session['username'] == username:
+            if request.method == 'POST':
+                products = load_product()
+                # Récupérer les données du formulaire
+                new_product = {
+                    "id": len(products) + 1,
+                    "name": request.form['name'],
+                    "price": float(request.form['price']),
+                    "description": request.form['description'],
+                    "owner": username
+                }
+                products.append(new_product)
+                save_product(products)
+                return redirect(url_for('client_dashboard', username=username))
+            return render_template('client_add_product.html', user=session)
+        return redirect(url_for('login'))
+    
+    @app.route('/client/<username>/delete_product/<int:product_id>', methods=['POST'])
+    def delete_product(username, product_id):
+        if 'username' in session and session['username'] == username:
+            products = load_product()
+            # Filtrer les produits pour exclure celui à supprimer
+            updated_products = [p for p in products if not (p['id'] == product_id and p['owner'] == username)]
+
+            # Si aucun produit n'a été supprimé, renvoyer une erreur (au cas où un utilisateur tente de supprimer un produit qui ne lui appartient pas)
+            if len(products) == len(updated_products):
+                return "Product not found or you are not authorized to delete it.", 403
+
+            # Sauvegarder la liste mise à jour
+            save_product(updated_products)
+            return redirect(url_for('client_dashboard'))
+        return redirect(url_for('login'))
+
+
   

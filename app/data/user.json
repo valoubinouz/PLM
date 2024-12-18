@@ -1,12 +1,28 @@
 [
   {
-      "username": "client1",
-      "password": "password123",
-      "role": "client"
-  },
-  {
-      "username": "admin1",
-      "password": "admin123",
-      "role": "admin"
-  }
+    "username": "theo_danune",
+    "password": "hashw9?&",
+    "role": "client"
+},
+{
+    "username": "francois_nestlo",
+    "password": "fr@nc0is:1",
+    "role": "client"
+},
+{
+    "username": "galaad",
+    "password": "G@l@@d_789!",
+    "role": "client"
+},
+{
+    "username": "michael_jordan",
+    "password": "M!ch@el_J0rd@N2024",
+    "role": "client"
+},
+{
+  "username": "super_admin",
+  "password": "S!p3r_Adm1n2024$",
+  "role": "admin"
+}
+
 ]
