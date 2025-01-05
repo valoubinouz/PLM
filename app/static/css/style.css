@@ -1,51 +1,106 @@
+/* --- Corps de la page --- */
 body {
-    font-family: Arial, sans-serif;
+    height: 100%;
+    font-family: 'Roboto', Arial, sans-serif; /* Plus moderne */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f8f9fa; /* Couleur plus douce */
+    line-height: 1.6; /* Améliore la lisibilité */
 }
 
+/* --- En-tête --- */
 header {
-    background-color: #333;
+    background: linear-gradient(90deg, #333, #555); /* Ajout d'un dégradé */
     color: #fff;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
 }
 
+/* --- Barre de navigation --- */
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centrer les liens */
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
 }
-
+nav .navbar-nav {
+    display: flex;
+    justify-content: space-around; /* Répartir les éléments en ligne */
+    flex-direction: row;
+    width: 100%;
+}
 nav a {
     color: #fff;
     text-decoration: none;
-    margin: 0 0.5rem;
+    margin: 0 0.75rem;
     padding: 0.5rem 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease; /* Transition douce */
 }
 
 nav a:hover {
-    background-color: #575757;
-    border-radius: 4px;
+    background-color: #007bff;
+    border-radius: 20px;
+    color: #fff;
+    transform: scale(1.1); /* Effet d'agrandissement */
 }
 
+/* --- Séparation des éléments de la navbar par '|' --- */
+.navbar-nav .nav-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-item:not(:last-child)::after {
+    content: " |";
+    margin-left: 10px;
+}
+
+/* --- Alignement du titre à gauche --- */
+.navbar-brand {
+    float: left; /* Aligne le titre à gauche */
+}
+
+/* --- Enlever la tache bleue sur les liens ou boutons au focus --- */
+.navbar-nav .nav-link:focus, .navbar-nav .nav-link:active {
+    outline: none; /* Enlever la bordure bleue au focus */
+    box-shadow: none; /* Enlever l'effet de tache bleue */
+}
+
+/* --- Option pour enlever l'ombre du lien au survol --- */
+.navbar-nav .nav-link:hover {
+    box-shadow: none;
+}
+
+
+/* --- Section de bienvenue --- */
 .welcome-section {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     background-color: #fff;
-    margin: 1rem auto;
+    margin: 2rem auto;
     max-width: 800px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    border-left: 5px solid #007bff; /* Bordure décorative */
+    animation: fadeIn 1s ease-in; /* Animation discrète */
 }
 
 .welcome-section h1 {
-    color: #333;
+    color: #222;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
+.welcome-section p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* --- Bouton de connexion --- */
 .login-button {
     display: inline-block;
     margin-top: 1rem;
@@ -53,10 +108,349 @@ nav a:hover {
     background-color: #007bff;
     color: #fff;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 30px; /* Bouton arrondi */
     font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .login-button:hover {
     background-color: #0056b3;
+    transform: translateY(-3px); /* Légère élévation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Pied de page --- */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+footer:hover {
+    background-color: #555; /* Changement léger au survol */
+}
+
+/* --- Formulaires --- */
+form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form .form-label {
+    font-weight: bold;
+    color: #007bff;
+}
+
+form input, form textarea {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.75rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+form .form-select {
+    border-radius: 8px;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+form .form-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+form .btn-primary {
+    background-color: #007bff;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+form input:focus, form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* --- Conteneur des matériaux --- */
+#materials-container {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+#materials-container .material-row {
+    display: flex;
+    gap: 1rem;
+}
+
+#materials-container input {
+    flex: 1;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Tables --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* --- Boutons --- */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.back-button {
+    background-color: #6c757d; /* Gris */
+    color: #fff; /* Blanc pour le texte */
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #5a6268; /* Gris plus foncé pour le survol */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-button {
+    float: right;
+    margin-right: 10px;
+    text-transform: uppercase; /* Optionnel, pour rendre le texte uniforme */
+}
+
+.state {
+    background-color: #6c757d; /* Gris */
+    color: #fff; /* Blanc pour le texte */
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    float: right;
+    margin-right: 10px;
+    text-transform: uppercase; /* Optionnel, pour rendre le texte uniforme */
+}
+
+
+
+/* --- Iframes --- */
+iframe {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Flexbox pour le contenu --- */
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- Responsivité --- */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .welcome-section {
+        padding: 2rem;
+        margin: 1rem;
+    }
+
+    .login-button {
+        width: 100%;
+    }
+}
+
+/* --- Liste des projets --- */
+.list-group-item {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 1.25rem; /* Augmenter légèrement le padding pour aérer */
+    background-color: #ffffff; /* Fond blanc pour mieux ressortir */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Ombre subtile pour ajouter de la profondeur */
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f1f3f5; /* Changer de fond au survol */
+    transform: translateY(-3px); /* Légère élévation au survol */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Ombre plus marquée au survol */
+}
+
+.items {
+    display: flex;
+    justify-content: space-between; /* Espacement entre le titre et l'état */
+    align-items: center; /* Centrer verticalement */
+    margin-bottom: 0.75rem; /* Espace entre le titre et la description */
+}
+
+.items h5 {
+    font-size: 1.25rem; /* Taille plus grande pour le nom du projet */
+    font-weight: bold;
+    color: #333; /* Couleur sombre pour le titre */
+    margin: 0;
+}
+
+
+.list-group-item p {
+    font-size: 1rem;
+    color: #666; /* Couleur grise pour la description */
+    margin-bottom: 0.75rem;
+}
+
+
+form button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #28a745; /* Vert pour le bouton de validation */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+
+
+.btn-info {
+    background-color: #17a2b8;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.badge.bg-secondary {
+    background-color: #6c757d;
+    font-weight: bold;
+}
+
+
+
+.container_div_filter {
+    display: flex; /* Crée un conteneur flexible */
+    justify-content: space-evenly; /* Espacement maximal entre les éléments */
+    align-items: center; /* Aligne les éléments verticalement au centre */
+    padding: 1rem; /* Espace autour des éléments */
+    max-width: 100%; 
+}
+
+
+.filter {
+    flex-grow: 0.2; /* Permet à ce conteneur de prendre plus de place */
+    margin-right: 10rem; /* Ajoute un petit espace entre le filtre et le bouton */
+}
+.create-project {
+    flex-grow: 2; /* Permet à ce bouton de prendre plus de place */
+}
+/* Éviter que d'autres éléments du body ne soient affectés */
+body {
+    margin: 0;
+    padding: 0;
 }

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Contact Us</h1>
+
+    <div class="row">
+        <!-- Formulaire de contact -->
+        <div class="col-md-6">
+            <h2>Send Us a Message</h2>
+            <form method="POST" action="/submit_contact">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+
+        <!-- Informations de contact -->
+        <div class="col-md-6">
+            <h2>Our Contact Details</h2>
+            <ul class="list-unstyled">
+                <li><strong>Address:</strong> 5-7 Rue Bellini, 92800 Puteaux, France</li>
+                <li><strong>Phone:</strong> +33 1 78 95 95 95</li>
+                <li><strong>Email:</strong> support.plm@help.com</li>
+            </ul>
+            <div class="mt-4">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1426.8741200923089!2d2.250181489944149!3d48.886558740633234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66581bfdeffc3%3A0x9bd576549e3bef49!2sCampus%20Cyber!5e0!3m2!1sfr!2sfr!4v1735649948255!5m2!1sfr!2sfr" 
+                width="550" 
+                height="400" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Client Projects{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ user['username'] }}'s Projects</h1>
+    <div class="container_div_filter">
+
+        <div class="filter">
+
+            <!-- Panneau déroulant pour filtrer les projets par état -->
+            <form method="GET" class="mb-4">
+                <label for="project_state" class="form-label">Filter by State</label>
+                <div class="input-group">
+                    <select class="form-select" id="project_state" name="state">
+                        <option value="">All States</option>
+                        <option value="In Development" {% if request.args.get('state') == 'In Development' %}selected{% endif %}>In Development</option>
+                        <option value="Under Validation" {% if request.args.get('state') == 'Under Validation' %}selected{% endif %}>Under Validation</option>
+                        <option value="Validated" {% if request.args.get('state') == 'Validated' %}selected{% endif %}>Validated</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="create-project">
+            <!-- Nouveau bouton pour créer un projet -->
+            <a href="{{ url_for('add_project', username=user['username']) }}" class="button">Create New Project</a>
+        </div>
+
+    </div>
+
+    <!-- Affichage des projets -->
+    <ul class="list-group">
+        {% for project in projects %}
+            {% if not request.args.get('state') or request.args.get('state') == project['state'] %}
+                <li class="list-group-item">
+                    <div class="items">
+                        <h5>{{ project['name'] }}</h5>
+                        <span class="state">{{ project['state'] }}</span>
+                    </div>
+                    <p>{{ project['description'] }}</p>
+                    <p><strong>Total Material Price: €{{ "%.2f" | format(project['total_material_price']) }}</strong></p>
+                    <a href="/client/{{ user['username'] }}/project/{{ project['id'] }}/details" class="button">View Details</a>
+                    
+                    {% if project['state'] == 'In Development' %}
+                    <form method="POST" action="{{ url_for('request_validation', username=user['username'], project_id=project['id']) }}">
+                        <button type="submit" class="btn btn-primary">Request Validation</button>
+                    </form>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

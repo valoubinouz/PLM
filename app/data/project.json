@@ -1,0 +1,171 @@
+[
+    {
+        "id": 1,
+        "name": "strawberry yogurt",
+        "price": 1,
+        "description": "yogourt with strawberry flavor",
+        "owner": "theo_danune",
+        "state": "In Development",
+        "materials": [
+            {
+                "id": 101,
+                "name": "strawberry",
+                "quantity": 100,
+                "unit": "grams",
+                "unit_price": 0.02
+            },
+            {
+                "id": 102,
+                "name": "milk",
+                "quantity": 1,
+                "unit": "liter",
+                "unit_price": 0.8
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "elephant yogurt",
+        "price": 0.5,
+        "description": "yogourt in an elephant shape",
+        "owner": "galaad",
+        "state": "Under Validation",
+        "materials": [
+            {
+                "id": 2,
+                "name": "verre",
+                "quantity": 12,
+                "unit": "g",
+                "unit_price": 0.05
+            },
+            {
+                "id": 4,
+                "name": "elephant",
+                "quantity": 5,
+                "unit": "piece",
+                "unit_price": 500.0
+            },
+            {
+                "id": 5,
+                "name": "elephant",
+                "quantity": 5,
+                "unit": "5",
+                "unit_price": 55.0
+            },
+            {
+                "id": 6,
+                "name": "elephant",
+                "quantity": 5,
+                "unit": "5",
+                "unit_price": 55.0
+            },
+            {
+                "id": 7,
+                "name": "elephant",
+                "quantity": 5,
+                "unit": "5",
+                "unit_price": 55.0
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "test",
+        "price": 55.0,
+        "description": "ouaiiis \u00e7a va ",
+        "owner": "galaad",
+        "state": "Under Validation",
+        "materials": []
+    },
+    {
+        "id": 4,
+        "name": "test",
+        "price": 500.0,
+        "description": "test",
+        "owner": "galaad",
+        "state": "In Development",
+        "materials": []
+    },
+    {
+        "id": 5,
+        "name": "test",
+        "price": 5555.0,
+        "description": "5555",
+        "owner": "galaad",
+        "state": "In Development",
+        "materials": [
+            {
+                "id": 1,
+                "name": "test",
+                "quantity": 555,
+                "unit": "5",
+                "unit_price": 5.0
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Tom SIMON",
+        "price": 555.0,
+        "description": "tesr",
+        "owner": "galaad",
+        "state": "In Development",
+        "materials": [
+            {
+                "id": 1,
+                "name": "verre",
+                "quantity": 5,
+                "unit": "55",
+                "unit_price": 5.0
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Tom Simon",
+        "price": 2.0,
+        "description": "2",
+        "owner": "galaad",
+        "state": "In Development",
+        "materials": [
+            {
+                "id": 1,
+                "name": "zz",
+                "quantity": 8,
+                "unit": "8",
+                "unit_price": 8.0
+            },
+            {
+                "id": 1,
+                "name": "zz",
+                "quantity": 8,
+                "unit": "8",
+                "unit_price": 8.0
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Tom Simon",
+        "price": 55.0,
+        "description": "555",
+        "owner": "galaad",
+        "state": "In Development",
+        "materials": [
+            {
+                "id": 1,
+                "name": "55",
+                "quantity": 5,
+                "unit": "5",
+                "unit_price": 5.0
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "quantity": 2,
+                "unit": "2",
+                "unit_price": 2.0
+            }
+        ]
+    }
+]
