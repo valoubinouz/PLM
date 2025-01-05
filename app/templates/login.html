@@ -20,11 +20,18 @@
     <button onclick="toggleForm()">No account? Signup</button>
   </div>
 
-  <div id="signup-form" style="display: none;">
+   <!-- Formulaire de signup -->
+   <div id="signup-form" style="display: none;">
     <h2>Signup</h2>
+    {% if signup_error %}
+    <p style="color: red;">{{ signup_error }}</p>
+    {% endif %}
+    {% if signup_success %}
+    <p style="color: green;">{{ signup_success }}</p>
+    {% endif %}
     <form action="/signup" method="POST">
-      <input type="username" name="username" placeholder="Username"> <br><br>
-      <input type="password" name="password" placeholder="Password"> <br><br>
+      <input type="username" name="username" placeholder="Username" required> <br><br>
+      <input type="password" name="password" placeholder="Password" required> <br><br>
       <input type="submit" value="Signup">
     </form>
     <button onclick="toggleForm()">Already have an account? Login</button>
