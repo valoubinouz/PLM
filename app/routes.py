@@ -64,6 +64,33 @@ def init_routes(app):
             return render_template('login.html', error="Invalid credentials")
 
         return render_template('login.html')
+    @app.route('/signup', methods=['GET', 'POST'])
+    def signup():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+
+            # Charger les utilisateurs existants
+            users = load_user()
+
+            # Vérifier si le nom d'utilisateur existe déjà
+            if any(u['username'] == username for u in users):
+                return render_template('login.html', signup_error="Username already exists")
+
+            # Ajouter le nouvel utilisateur avec un rôle par défaut (par exemple : client)
+            new_user = {
+                "username": username,
+                "password": password,
+                "role": "client"  # Vous pouvez changer le rôle par défaut si nécessaire
+            }
+            users.append(new_user)
+            save_user(users)
+
+            # Rediriger vers la page de login avec un message de succès
+            return render_template('login.html', signup_success="Account created successfully! Please log in.")
+
+        return render_template('login.html')
+
 
     @app.route('/logout')
     def logout():

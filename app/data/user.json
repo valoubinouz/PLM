@@ -1,18 +1,22 @@
 [
-  {
-    "username": "theo_danune",
-    "password": "hashw9?&",
-    "role": "client"
-},
-{
-    "username": "galaad",
-    "password": "facile",
-    "role": "client"
-},
-{
-  "username": "super_admin",
-  "password": "S!p3r_Adm1n2024$",
-  "role": "admin"
-}
-
+    {
+        "username": "theo_danune",
+        "password": "hashw9?&",
+        "role": "client"
+    },
+    {
+        "username": "galaad",
+        "password": "facile",
+        "role": "client"
+    },
+    {
+        "username": "super_admin",
+        "password": "S!p3r_Adm1n2024$",
+        "role": "admin"
+    },
+    {
+        "username": "valouz",
+        "password": "test",
+        "role": "client"
+    }
 ]
