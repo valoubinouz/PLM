@@ -1,5 +1,6 @@
 import json
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -101,8 +102,66 @@ def init_routes(app):
     @app.route('/admin')
     def admin_dashboard():
         if 'role' in session and session['role'] == 'admin':
-            return render_template('admin_dashboard.html')
+            projects = load_project()
+            user = {'username': session['username'], 'role': session['role']}
+            
+            validated = [p for p in projects if p['state'] == 'Validated']
+
+            return render_template('admin_dashboard.html', projects=validated, user=user)
         return redirect(url_for('login'))
+    
+    @app.route('/admin/in_development')
+    def in_development():
+        if 'role' in session and session['role'] == 'admin':
+            projects = load_project()
+            user = {'username': session['username'], 'role': session['role']}
+                
+            in_development = [p for p in projects if p['state'] == 'In Development']
+
+            return render_template('in_development.html', projects=in_development, user=user)
+        return redirect(url_for('login'))
+    
+    @app.route('/admin/Rejected')
+    def rejected():
+        if 'role' in session and session['role'] == 'admin':
+            projects = load_project()
+            user = {'username': session['username'], 'role': session['role']}
+                
+            rejected = [p for p in projects if p['state'] == 'Rejected']
+
+            return render_template('rejected.html', projects=rejected, user=user)
+        return redirect(url_for('login'))
+    
+    @app.route('/admin/waiting', methods=['GET', 'POST'])
+    def waiting_validation():
+        if 'role' in session and session['role'] == 'admin':
+            projects = load_project()
+
+            # Handle Approve/Reject actions
+            if request.method == 'POST':
+                project_id = int(request.form['project_id'])
+                action = request.form['action']
+
+                for project in projects:
+                    if project['id'] == project_id and project['state'] == 'Under Validation':
+                        if action == 'approve':
+                            project['state'] = 'Validated'
+                            flash(f"Project '{project['name']}' has been approved!", "success")
+
+                        elif action == 'reject':
+                            project['state'] = 'Rejected'
+                            flash(f"Project '{project['name']}' has been rejected.", "danger")
+
+                        save_project(projects)
+                        break
+
+                return redirect(url_for('waiting_validation'))
+
+        # Filter projects in "Under Validation" state
+            pending_projects = [p for p in projects if p['state'] == 'Under Validation']
+            return render_template('waiting_validation.html', projects=pending_projects)
+        return redirect(url_for('login'))
+
 
     # Dashboard client
     @app.route('/client/<username>', methods=['GET'])

@@ -10,13 +10,18 @@
         "role": "client"
     },
     {
-        "username": "super_admin",
-        "password": "S!p3r_Adm1n2024$",
+        "username": "admin",
+        "password": "admin",
         "role": "admin"
     },
     {
         "username": "valouz",
         "password": "test",
+        "role": "client"
+    },
+    {
+        "username": "tom",
+        "password": "tom",
         "role": "client"
     }
 ]

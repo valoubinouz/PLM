@@ -4,7 +4,10 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1>Projects Validated</h1>
+    <h1>Projects Waiting for Validation</h1>
+
+    <!-- Toast Container -->
+    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1055;"></div>
 
     {% if projects %}
     <div class="accordion" id="projectsAccordion">
@@ -54,6 +57,12 @@
                     <p>No materials added yet.</p>
                     {% endif %}
 
+                    <!-- Approve/Reject Buttons -->
+                    <form method="POST" class="mt-3">
+                        <input type="hidden" name="project_id" value="{{ project['id'] }}">
+                        <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -63,4 +72,41 @@
     <p>No projects are waiting for validation.</p>
     {% endif %}
 </div>
+
+<script>
+    // Render messages from Jinja2 to a JavaScript variable
+    const messages = {{ get_flashed_messages(with_categories=True) | tojson | safe }};
+</script>
+
+<script>
+    // Display toast notifications for flash messages
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const toastContainer = document.getElementById("toast-container");
+
+        messages.forEach(([category, message]) => {
+            const toast = document.createElement("div");
+            toast.className = `toast align-items-center text-bg-${category} border-0`;
+            toast.role = "alert";
+            toast.ariaLive = "assertive";
+            toast.ariaAtomic = "true";
+            toast.style = "margin-bottom: 10px; min-width: 250px;";
+
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Initialize Bootstrap toast
+            const bootstrapToast = new bootstrap.Toast(toast, { delay: 3000 });
+            bootstrapToast.show();
+        });
+    });
+</script>
 {% endblock %}
