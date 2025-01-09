@@ -14,6 +14,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>specification</th>
                 <th>Quantity</th>
                 <th>Unit</th>
                 <th>Unit Price (€)</th>
@@ -25,6 +26,7 @@
             <tr>
                 <td>{{ material['id'] }}</td>
                 <td>{{ material['name'] }}</td>
+                <td>{{ material['specification'] }}</td>
                 <td>{{ material['quantity'] }}</td>
                 <td>{{ material['unit'] }}</td>
                 <td>{{ "%.2f" | format(material['unit_price']) }}</td>
@@ -40,7 +42,27 @@
     {% if project['state'] == "In Development" %}
 
         <!-- Button to toggle edit mode -->
-        <button id="editButton" class="btn btn-warning mt-3">Modify Materials</button>
+        <button id="editButton" class="btn btn-warning mt-3">Edit Project</button>
+
+        <div id="editProjectInfo" class="mt-4" style="display: none;">
+            <h3>Edit Project Information</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="project_name" class="form-label">Project Name</label>
+                    <input type="text" class="form-control" id="project_name" name="project_name" value="{{ project['name'] }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="project_description" class="form-label">Description</label>
+                    <textarea class="form-control" id="project_description" name="project_description" rows="3" required>{{ project['description'] }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="project_price" class="form-label">Price (€)</label>
+                    <input type="number" step="0.01" class="form-control" id="project_price" name="project_price" value="{{ project['price'] }}" required>
+                </div>
+                <button type="submit" name="update_project_info" class="btn btn-success">Save Changes</button>
+            </form>
+        </div>
+
 
         <!-- Editable section (hidden by default) -->
         <div id="editableSection" style="display: none;">
@@ -51,6 +73,10 @@
                     <div class="mb-3">
                         <label for="material_name" class="form-label">Material Name</label>
                         <input type="text" class="form-control" id="material_name" name="material_name" required>
+                    </div>
+                    <div class = "mb-3">
+                        <label for="material_specification" class="form-label">Specification</label>
+                        <input type="text" class="form-control" id="material_specification" name="material_specification" required>
                     </div>
                     <div class="mb-3">
                         <label for="material_quantity" class="form-label">Quantity</label>
@@ -117,12 +143,14 @@
     document.getElementById("editButton").addEventListener("click", function() {
         const editableSection = document.getElementById("editableSection");
         editableSection.style.display = (editableSection.style.display === "none" || editableSection.style.display === "") ? "block" : "none";
-
+        const infoSection = document.getElementById("editProjectInfo");
+        infoSection.style.display = (infoSection.style.display === "none" || infoSection.style.display === "") ? "block" : "none";
+        
         // Toggle button text
-        if (this.textContent === "Modify Materials") {
+        if (this.textContent === "Edit Project") {
             this.textContent = "Cancel Modification";
         } else {
-            this.textContent = "Modify Materials";
+            this.textContent = "Edit Project";
         }
     });
 </script>

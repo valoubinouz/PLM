@@ -1,10 +1,5 @@
 [
     {
-        "username": "theo_danune",
-        "password": "hashw9?&",
-        "role": "client"
-    },
-    {
         "username": "galaad",
         "password": "facile",
         "role": "client"
@@ -15,13 +10,43 @@
         "role": "admin"
     },
     {
-        "username": "valouz",
-        "password": "test",
+        "username": "alice_smith",
+        "password": "A1ice@2025$%",
         "role": "client"
     },
     {
-        "username": "tom",
-        "password": "tom",
+        "username": "bob_jones",
+        "password": "B0b_J0n3s#Secure!",
         "role": "client"
+    },
+    {
+        "username": "carla_williams",
+        "password": "C@rlaWi11iams$4",
+        "role": "client"
+    },
+    {
+        "username": "david_brown",
+        "password": "D@v!d_Br0wn#2025",
+        "role": "client"
+    },
+    {
+        "username": "emily_davis",
+        "password": "Em1lyD@v!s_22#",
+        "role": "client"
+    },
+    {
+        "username": "frank_miller",
+        "password": "Fr@nk_M!ll3r2025$",
+        "role": "client"
+    },
+    {
+        "username": "admin_john",
+        "password": "Adm1n_John#2025!@",
+        "role": "admin"
+    },
+    {
+        "username": "admin_susan",
+        "password": "Admin_Sus@n2025$!",
+        "role": "admin"
     }
 ]

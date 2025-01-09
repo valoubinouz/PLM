@@ -1,9 +1,13 @@
 import json
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from datetime import datetime
+
 
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
 
 
 # Charger les données depuis le fichier JSON
@@ -24,6 +28,20 @@ def load_user():
 def save_user(users):
     with open('app/data/user.json', 'w', encoding='utf-8') as f:
         json.dump(users, f, indent=4)
+
+# Charger les messages depuis le fichier JSON
+
+def load_messages():
+    with open('app/data/messages.json', "r") as f:
+        content = f.read().strip()
+        if not content:  # Vérifie si le fichier est vide
+            return []  # Retourne une liste vide si le fichier est vide
+        return json.loads(content)  # Charge et retourne les messages JSON
+
+def save_messages(messages):
+    with open('app/data/messages.json', 'w', encoding='utf-8') as f:
+        json.dump(messages, f, indent=4)
+
 
 def init_routes(app):
     @app.route('/')
@@ -196,6 +214,7 @@ def init_routes(app):
                 # Ajouter des matériaux s'ils sont renseignés
                
                 material_names = request.form.getlist('material_name')
+                material_specifications = request.form.getlist('material_specification')
                 material_quantities = request.form.getlist('material_quantity')
                 material_units = request.form.getlist('material_unit')
                 material_prices = request.form.getlist('material_unit_price')
@@ -207,6 +226,7 @@ def init_routes(app):
                         new_material = {
                             "id": i + 1,
                             "name": material_names[i],
+                            "specification": material_specifications[i],
                             "quantity": int(material_quantities[i]),
                             "unit": material_units[i],
                             "unit_price": float(material_prices[i])
@@ -253,6 +273,7 @@ def init_routes(app):
                     new_material = {
                         "id": max((m["id"] for m in project["materials"]), default=0) + 1,
                         "name": request.form['material_name'],
+                        "specification": request.form['material_specification'],
                         "quantity": int(request.form['material_quantity']),
                         "unit": request.form['material_unit'],
                         "unit_price": float(request.form['material_unit_price'])
@@ -263,7 +284,36 @@ def init_routes(app):
                     # Supprimer une matière première
                     material_id = int(request.form['delete_material'])
                     project['materials'] = [m for m in project['materials'] if m['id'] != material_id]
+                if 'update_project_info' in request.form:
+                    # Mettre à jour les informations du projet
+                    project['name'] = request.form['project_name']
+                    project['description'] = request.form['project_description']
+                    project['price'] = float(request.form['project_price'])
 
+                    # Sauvegarder les modifications
+                    save_project(projects)
+
+                    # Rediriger pour refléter les changements
+                    return redirect(url_for('project_details', username=username, project_id=project_id))
+
+
+                elif 'create_new' in request.form:
+                # Créer un nouveau projet basé sur l'actuel
+                    new_project = {
+                        "id": max((p["id"] for p in projects), default=0) + 1,
+                        "name": f"{project['name']} (Copy)",
+                        "price": sum(m["quantity"] * m["unit_price"] for m in project["materials"]),
+                        "description": project['description'],
+                        "owner": username,
+                        "state": "In Development",
+                        "materials": project['materials'][:],  # Copier les matériaux
+                    }
+                    projects.append(new_project)
+                    save_project(projects)
+
+                    # Rediriger vers la page des détails du nouveau projet
+                    return redirect(url_for('project_details', username=username, project_id=new_project["id"]))
+                
                 # Sauvegarder les modifications
                 save_project(projects)
 
@@ -301,9 +351,64 @@ def init_routes(app):
         else:
             user = None  # Si l'utilisateur n'est pas connecté
 
-        return render_template('contact.html', user=user)
+        return render_template('contact.html', user=user, messages=load_messages())
+
+    @app.route('/submit_contact', methods=['POST'])
+    def submit_contact():
+        # Charger les messages existants
+        messages = load_messages()
+        username= session['username']
+
+        # Ajouter le nouveau message
+        new_message = {
+            "id": len(messages) + 1,
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # Enregistrer la date actuelle
+            "name": username,
+            "project": request.form['project'],
+            "message": request.form['message'],
+            "response": None
+        }
+        messages.append(new_message)
+
+        # Sauvegarder les messages mis à jour
+        save_messages(messages)
+
+        # Afficher un message de confirmation
+        flash("Your message has been sent successfully!", "success")
+        return redirect(url_for('contact'))
+
+    @app.route('/admin/messages')
+    def admin_contact():
+        if 'role' in session and session['role'] == 'admin':
+            messages = load_messages()
+            return render_template('admin_contact.html', messages=messages)
+        return redirect(url_for('login'))
+
+    @app.route('/admin_contact/respond/<int:message_id>', methods=['POST'])
+    def respond_to_message(message_id):
+        try:
+            messages = load_messages()
+            response = request.form.get("response")
+            if not response:
+                flash("Response cannot be empty.", "warning")
+                return redirect(url_for('admin_contact'))
+
+            # Chercher le message correspondant
+            for message in messages:
+                if message["id"] == message_id:
+                    message["response"] = response
+                    break
+            else:
+                flash("Message not found.", "danger")
+                return redirect(url_for('admin_contact'))
+
+            # Sauvegarder les réponses dans le fichier JSON
+            save_messages(messages)
+            flash("Response sent successfully.", "success")
+            return redirect(url_for('admin_contact'))
+        except Exception as e:
+            flash(f"An error occurred: {e}", "danger")
+            return redirect(url_for('admin_contact'))
 
 
-
-
-  
+    

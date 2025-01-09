@@ -31,6 +31,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Specification</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
                                 <th>Unit Price (€)</th>
@@ -42,6 +43,7 @@
                             <tr>
                                 <td>{{ material['id'] }}</td>
                                 <td>{{ material['name'] }}</td>
+                                <td>{{ material['specification'] }}</td>
                                 <td>{{ material['quantity'] }}</td>
                                 <td>{{ material['unit'] }}</td>
                                 <td>{{ "%.2f" | format(material['unit_price']) }}</td>

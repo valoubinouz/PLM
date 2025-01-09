@@ -1,0 +1,52 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Admin - Contact{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Messages Received</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Client</th>
+                <th>project concerned</th>
+                <th>Message</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if messages%}
+            {% for msg in messages %}
+            <tr>
+                <td>{{ msg.date }}</td>
+                <td>{{ msg.name }}</td>
+                <td>{{ msg.project }}</td>
+                <td>{{ msg.message }}</td>
+                <td>
+                    {% if msg.response %}
+                        {{ msg.response }}
+                    {% else %}
+                        <form action="{{ url_for('respond_to_message', message_id=msg.id) }}" method="post">
+                            <textarea name="response" placeholder="Type your response here"></textarea>
+                            <button type="submit">Send Response</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">No messages received yet.</td>
+            </tr>
+
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+    <!-- Code pour afficher les messages -->
+ 
+{% endblock %}

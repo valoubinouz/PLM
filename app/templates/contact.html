@@ -12,12 +12,8 @@
             <h2>Send Us a Message</h2>
             <form method="POST" action="/submit_contact">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                    <label for="project" class="form-label">Project Concerned</label>
+                    <input type="text" class="form-control" id="project" name="project" placeholder="Project Name" required>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Message</label>
@@ -26,6 +22,43 @@
                 <button type="submit" class="btn btn-primary">Send Message</button>
             </form>
         </div>
+        
+    <!-- Liste des messages envoyés et réponses de l'admin -->
+    <div class="mt-5">
+        <h2>Your Messages</h2>
+        {% set user_messages = messages | selectattr('name', 'equalto', user.username) | list %} <!-- Filtrer les messages -->
+        {% if user_messages %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>project concerned</th>
+                        <th>Your Message</th>
+                        <th>Admin Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in user_messages %}
+
+                    <tr>
+                        <td>{{ message.date }}</td>
+                        <td>{{ message.project }}</td>
+                        <td>{{ message.message }}</td>
+                        <td>
+                            {% if message.response %}
+                                {{ message.response }}
+                            {% else %}
+                                <em>No response yet</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have not sent any messages yet.</p>
+        {% endif %}
+    </div>
 
         <!-- Informations de contact -->
         <div class="col-md-6">
@@ -43,9 +76,10 @@
                 allowfullscreen="" 
                 loading="lazy" 
                 referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+                </iframe>
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}
