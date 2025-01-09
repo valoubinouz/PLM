@@ -403,5 +403,45 @@
                 "unit_price": 0.02
             }
         ]
+    },
+    {
+        "id": 23,
+        "name": "Lord Yaourtatus",
+        "price": 15.0,
+        "description": "An exquisite yogurt combining the finest ingredients: Vanilla Bourbon from Madagascar, hydrolyzed marine collagen, edible gold leaf, and organic coconut flower sugar.",
+        "owner": "premium_taste",
+        "state": "In Development",
+        "materials": [
+            {
+                "id": 1301,
+                "name": "Vanilla Bourbon from Madagascar",
+                "quantity": 5,
+                "unit": "grams",
+                "unit_price": 3.0
+            },
+            {
+                "id": 1302,
+                "name": "Hydrolyzed marine collagen",
+                "quantity": 10,
+                "unit": "grams",
+                "unit_price": 2.5
+            },
+            {
+                "id": 1303,
+                "name": "Edible gold leaf",
+                "quantity": 1,
+                "unit": "sheet",
+                "unit_price": 5.0
+            },
+            {
+                "id": 1304,
+                "name": "Organic coconut flower sugar",
+                "quantity": 50,
+                "unit": "grams",
+                "unit_price": 0.1
+            }
+        ]
     }
+    
+    
 ]
