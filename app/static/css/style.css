@@ -17,6 +17,16 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    max-width: 150px; /* Adjust the size as needed */
+    height: auto;
+}
+
 /* --- Barre de navigation --- */
 nav {
     display: flex;

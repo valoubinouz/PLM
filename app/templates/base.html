@@ -3,41 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}PLM Client Website{% endblock %}</title>
+    <title>{% block title %}Client Website{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 </head>
 <body>
     <div class="wrapper">
         <header class="header">
-            <div class="logo">PLM Client Website</div>
+            <div class="logo-container">
+                <!-- Logo -->
+                <a href="/">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="PLM Logo" class="logo">
+                </a>
+                <div class="site-title">Spoon Client Website</div>
+            </div>
             <nav class="nav">
-              <ul>
-                <li><a  href="/"> <i class="fa-solid fa-house"></i>    Home </a></li>
-                <li><a href="{{ url_for('client_dashboard', username=user['username']) }}">Projects</a></li>
-                <li><a href="/contact"> <i class="fa-solid fa-comment"></i>   Contact</a></li>
-              </ul>
+                <ul>
+                    <li><a href="/"> <i class="fa-solid fa-house"></i> Home </a></li>
+                    <li><a href="{{ url_for('client_dashboard', username=user['username']) }}">Projects</a></li>
+                    <li><a href="/contact"> <i class="fa-solid fa-comment"></i> Contact</a></li>
+                </ul>
             </nav>
-          </header>
-          
-          <style>
-            .header {
-              display: flex;
-              justify-content: space-between;
-              padding: 30px;
-              background-color: #333;
-              color: white;
-            }
-          
-            .nav ul {
-              list-style: none;
-              display: flex;
-              gap: 20px;
-            }
-          
+        </header>
 
-          </style>
-          
+        <style>
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 30px;
+                background-color: #333;
+                color: white;
+            }
+
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .logo {
+                max-height: 50px;
+                width: auto;
+            }
+
+            .site-title {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: white;
+            }
+
+            .nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            .nav ul li a {
+                color: white;
+                text-decoration: none;
+                font-size: 1rem;
+            }
+
+            .nav ul li a:hover {
+                text-decoration: underline;
+            }
+        </style>
 
         <main class="content">
             {% block content %}{% endblock %}
